@@ -52,6 +52,9 @@
           "text": "levantame una nueva instancia de discovery"
         },
         {
+          "text": "levantame una vm"
+        },
+        {
           "text": "Levantar Watson Assistant"
         },
         {
@@ -65,6 +68,39 @@
         }
       ],
       "description": "Describe la intención de aprovisionar un nuevo recurso"
+    },
+    {
+      "intent": "Despedida",
+      "examples": [
+        {
+          "text": "Adios"
+        },
+        {
+          "text": "adiós"
+        },
+        {
+          "text": "bye"
+        },
+        {
+          "text": "chau"
+        },
+        {
+          "text": "chaucis"
+        },
+        {
+          "text": "hasta la proxima"
+        },
+        {
+          "text": "hasta luego"
+        },
+        {
+          "text": "nos olemos luego"
+        },
+        {
+          "text": "nos vemos"
+        }
+      ],
+      "description": ""
     },
     {
       "intent": "Migrar",
@@ -82,6 +118,9 @@
           "text": "Quiero migrar la app nerdearla del lado oscuro hacia la fuerza"
         },
         {
+          "text": "Quiero mover mi aplicación al lado oscuro"
+        },
+        {
           "text": "Quiero mover una aplicación"
         }
       ],
@@ -90,12 +129,81 @@
   ],
   "entities": [
     {
+      "entity": "binario",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "no",
+          "synonyms": [
+            "negativo",
+            "no gracias",
+            "no, gracias",
+            "nop",
+            "nope",
+            "no quiero"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "si",
+          "synonyms": [
+            "bueno",
+            "claro",
+            "dale",
+            "ok",
+            "okay",
+            "okey",
+            "positivo",
+            "seguro",
+            "sip",
+            "sipi",
+            "yes"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "nube",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "nube jedi",
+          "synonyms": [
+            "lado de la fuerza",
+            "lado luminoso",
+            "la fuerza",
+            "orden jedi"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "nube sith",
+          "synonyms": [
+            "lado oscuro",
+            "nube oscura"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
       "entity": "recurso",
       "values": [
         {
           "type": "synonyms",
+          "value": "Anakin",
+          "synonyms": [
+            "Ani",
+            "Darth Vader",
+            "Vader"
+          ]
+        },
+        {
+          "type": "synonyms",
           "value": "aplicacion",
           "synonyms": [
+            "aplicación",
             "app",
             "application"
           ]
@@ -130,7 +238,7 @@
           {
             "values": [
               {
-                "text": "Bienvenido. ¿Cómo puedo ayudarte?"
+                "text": "Bienvenido tú seas. ¿En qué puedo ayudarte?"
               }
             ],
             "response_type": "text",
@@ -165,8 +273,165 @@
       },
       "conditions": "anything_else",
       "dialog_node": "En otras cosas",
-      "previous_sibling": "Bienvenido",
+      "previous_sibling": "node_7_1603310444412",
       "disambiguation_opt_out": true
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1603309580345",
+      "context": {
+        "recurso": "@recurso"
+      },
+      "conditions": "@recurso",
+      "event_name": "input",
+      "dialog_node": "handler_1_1603309580357"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "¿A dónde querés mover el recurso?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_3_1603308980043",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1603308980060",
+      "previous_sibling": "handler_4_1603308980060"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_3_1603308980043",
+      "context": {
+        "nube": "@nube"
+      },
+      "conditions": "@nube",
+      "event_name": "input",
+      "dialog_node": "handler_4_1603308980060"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "¿Qué recurso querés crear?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_8_1603309416783",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1603309416916",
+      "previous_sibling": "handler_9_1603309416916"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "¿Qué recurso querés mover?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_10_1603309580345",
+      "event_name": "focus",
+      "dialog_node": "handler_8_1603309580357",
+      "previous_sibling": "handler_1_1603309580357"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1603309416783",
+      "context": {
+        "recurso": "@recurso"
+      },
+      "conditions": "@recurso",
+      "event_name": "input",
+      "dialog_node": "handler_9_1603309416916"
+    },
+    {
+      "type": "frame",
+      "title": "Crear",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "¿Estás seguro que querés crear: $recurso?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Crear",
+      "dialog_node": "node_1_1603309386624",
+      "previous_sibling": "node_7_1603308910877"
+    },
+    {
+      "type": "frame",
+      "title": "Migrar",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Este es el camino. Voy a mover a $recurso hacia $nube."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Migrar",
+      "dialog_node": "node_7_1603308910877",
+      "previous_sibling": "Bienvenido"
+    },
+    {
+      "type": "standard",
+      "title": "Despedida",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Que la fuerza te acompañe."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Despedida",
+      "dialog_node": "node_7_1603310444412",
+      "previous_sibling": "node_1_1603309386624"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1603308910877",
+      "variable": "$recurso",
+      "dialog_node": "slot_10_1603309580345"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1603308910877",
+      "variable": "$nube",
+      "dialog_node": "slot_3_1603308980043",
+      "previous_sibling": "slot_10_1603309580345"
+    },
+    {
+      "type": "slot",
+      "parent": "node_1_1603309386624",
+      "variable": "$recurso",
+      "dialog_node": "slot_8_1603309416783"
     }
   ],
   "counterexamples": [],
