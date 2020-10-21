@@ -1,0 +1,193 @@
+{
+  "intents": [
+    {
+      "intent": "Bienvenida",
+      "examples": [
+        {
+          "text": "Buenas!"
+        },
+        {
+          "text": "buenas noches"
+        },
+        {
+          "text": "buenas tardes"
+        },
+        {
+          "text": "buen dia"
+        },
+        {
+          "text": "Buenos dias"
+        },
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hola"
+        },
+        {
+          "text": "Hola que tal?"
+        },
+        {
+          "text": "Holis!"
+        },
+        {
+          "text": "¿Que tul?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Crear",
+      "examples": [
+        {
+          "text": "Armame una nueva maquina virtual"
+        },
+        {
+          "text": "Arma una nueva VM"
+        },
+        {
+          "text": "creame una nueva instancia de speech to text"
+        },
+        {
+          "text": "levantame una nueva instancia de discovery"
+        },
+        {
+          "text": "Levantar Watson Assistant"
+        },
+        {
+          "text": "Quiero crear una nueva virtual machine"
+        },
+        {
+          "text": "Quiero levantar una nueva VM"
+        },
+        {
+          "text": "Quiero que me armes una nueva instancia de Watson Assistant"
+        }
+      ],
+      "description": "Describe la intención de aprovisionar un nuevo recurso"
+    },
+    {
+      "intent": "Migrar",
+      "examples": [
+        {
+          "text": "Migración de app nerdearla de nube oscura a nube de la fuerza"
+        },
+        {
+          "text": "Migrar app"
+        },
+        {
+          "text": "Moveme la app order66 de dev a prod"
+        },
+        {
+          "text": "Quiero migrar la app nerdearla del lado oscuro hacia la fuerza"
+        },
+        {
+          "text": "Quiero mover una aplicación"
+        }
+      ],
+      "description": "Describe la intención de migrar una instancia de ubicación"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "recurso",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "aplicacion",
+          "synonyms": [
+            "app",
+            "application"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "maquina virtual",
+          "synonyms": [
+            "maq virtual",
+            "mv",
+            "virtual",
+            "virtual machine",
+            "vm"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Bienvenido",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Bienvenido. ¿Cómo puedo ayudarte?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Bienvenido"
+    },
+    {
+      "type": "standard",
+      "title": "En otras cosas",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "No le he entendido. Intente reformular la consulta."
+              },
+              {
+                "text": "¿Puede expresarse con otras palabras? No le he entendido."
+              },
+              {
+                "text": "No entendí el significado."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "En otras cosas",
+      "previous_sibling": "Bienvenido",
+      "disambiguation_opt_out": true
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Querías decir:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "Ninguna de las anteriores"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Querías decir:"
+    }
+  },
+  "learning_opt_out": false,
+  "name": "nerdear.la-padawan",
+  "language": "es",
+  "description": ""
+}
